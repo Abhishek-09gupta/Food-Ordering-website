@@ -1,4 +1,4 @@
-# TastyHub — Food Ordering Experience
+# TastyHub — Food Ordering Website
 
 TastyHub is a polished full-stack food ordering prototype with a live-backed menu, a modern storefront UI, and a working checkout/order flow. The app is split into a Node.js/Express backend and a static frontend that communicate over HTTP.
 
