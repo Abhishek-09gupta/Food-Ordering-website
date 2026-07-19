@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TastyHub — Order Food Online</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<div class="navbar">
+  <div class="nav-inner">
+    <div class="brand">
+      <div class="brand-mark">
+        <img src="image/logo.png" alt="TastyHub Logo">
+      </div>
+      <div class="display">TastyHub</div>
+    </div>
+    <div class="nav-links">
+      <button data-page="home" class="active">Home</button>
+      <button data-page="menu">Menu</button>
+      <button onclick="scrollToRestaurants()">Restaurants</button>
+      <button onclick="scrollToDelivery()">Delivery</button>
+    </div>
+    <div class="nav-actions">
+      <button class="icon-btn" id="darkToggle" title="Toggle theme">🌙</button>
+      <button class="icon-btn" id="favToggle" title="Favorites">♡<span class="badge" id="favCount" style="display:none;">0</span></button>
+      <button class="icon-btn" id="loginBtn" title="Account">👤</button>
+      <button class="icon-btn" id="cartBtn" title="Cart">🛒<span class="badge" id="cartCount" style="display:none;">0</span></button>
+      <button class="hamburger" id="hamburger">☰</button>
+    </div>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <button data-page="home">Home</button>
+    <button data-page="menu">Menu</button>
+    <button onclick="scrollToRestaurants()">Restaurants</button>
+    <button onclick="scrollToDelivery()">Delivery</button>
+  </div>
+</div>
+
+<!-- ================= HOME PAGE ================= -->
+<div class="page active" id="page-home">
+
+  <section class="hero wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow">● 5 kitchens open near you</span>
+        <h1>Hungry?<br><span class="accent">Good.</span></h1>
+        <p>Real kitchens, real cooks, delivered hot. Search a craving, build your plate, and track it to your door — no fuss, no cold food.</p>
+        <div class="hero-cta">
+          <button class="pill-btn chili" data-page="menu">Start ordering →</button>
+          <button class="pill-btn" style="background:transparent;color:var(--ink);border:1px solid var(--border);" onclick="scrollToRestaurants()">Browse restaurants</button>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat"><b>120+</b><span>Dishes on the menu</span></div>
+          <div class="hero-stat"><b>24</b><span>Partner kitchens</span></div>
+          <div class="hero-stat"><b>28 min</b><span>Avg. delivery time</span></div>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="ticket-chip">🎟️ Order #0417 <span style="color:var(--basil);font-weight:700;">on the way</span></div>
+        <div class="hero-carousel" id="heroCarousel"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap" id="categoriesSection">
+    <div class="section-head">
+      <div>
+        <span class="section-label">Pick a craving</span>
+        <h2>Food categories</h2>
+      </div>
+    </div>
+    <div class="cat-row" id="catRow"></div>
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-label">Hot right now</span>
+        <h2>Popular &amp; recommended</h2>
+        <p>What everyone's ordering this week.</p>
+      </div>
+      <button class="pill-btn" style="background:transparent;color:var(--ink);border:1px solid var(--border);" data-page="menu">View full menu</button>
+    </div>
+    <div class="card-row" id="popularRow"></div>
+  </section>
+
+  <section class="section wrap" id="restaurantsSection">
+    <div class="section-head">
+      <div>
+        <span class="section-label">Kitchens</span>
+        <h2>Order from a restaurant</h2>
+        <p>Local spots, plated and packed with care.</p>
+      </div>
+    </div>
+    <div class="rest-row" id="restRow"></div>
+  </section>
+
+  <section class="wrap" id="deliverySection">
+    <div class="delivery-section">
+      <span class="section-label">Good to know</span>
+      <h2 style="margin:0 0 6px;color:var(--bg);">Delivery information</h2>
+      <p style="opacity:.75;margin:0;max-width:480px;">Straightforward delivery, no surprise fees.</p>
+      <div class="delivery-grid">
+        <div class="delivery-item"><b>25–35 min</b><span>Typical delivery window</span></div>
+        <div class="delivery-item"><b>₹29</b><span>Flat delivery fee under 3 km</span></div>
+        <div class="delivery-item"><b>₹199</b><span>Minimum order value</span></div>
+        <div class="delivery-item"><b>7 AM – 11 PM</b><span>Kitchens open daily</span></div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ================= MENU PAGE ================= -->
+<div class="page" id="page-menu">
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-label">Full menu</span>
+        <h2>Find your next meal</h2>
+        <p>Search, filter, and add to your order.</p>
+      </div>
+    </div>
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="searchInput" placeholder="Search dishes, e.g. paneer, ramen, tacos...">
+      <button class="search-btn" id="searchButton" type="button">Search</button>
+    </div>
+    <div class="filter-row" id="filterRow"></div>
+    <div class="card-row" id="menuRow"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <div class="e-icon">🍽️</div>
+      <div>No dishes match your search. Try a different craving.</div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= CHECKOUT PAGE ================= -->
+<div class="page" id="page-checkout">
+  <section class="section wrap">
+    <div class="section-head">
+      <div>
+        <span class="section-label">Almost there</span>
+        <h2>Checkout</h2>
+        <p>Confirm your address and payment to place the order.</p>
+      </div>
+    </div>
+    <div class="checkout-grid">
+      <div>
+        <div class="checkout-card">
+          <h3>📍 Delivery address</h3>
+          <div class="field-row">
+            <div class="field"><label>Full name</label><input type="text" id="addrName" placeholder="Your name"></div>
+            <div class="field"><label>Phone number</label><input type="tel" id="addrPhone" placeholder="+91 98765 43210"></div>
+          </div>
+          <div class="field"><label>Address line 1</label><input type="text" id="addrLine1" placeholder="House no, street"></div>
+          <div class="field"><label>Address line 2</label><input type="text" id="addrLine2" placeholder="Landmark, area"></div>
+          <div class="field-row">
+            <div class="field"><label>City</label><input type="text" id="addrCity" placeholder="City"></div>
+            <div class="field"><label>PIN code</label><input type="text" id="addrPin" placeholder="000000"></div>
+          </div>
+          <div class="field"><label>Delivery instructions (optional)</label><textarea rows="2" id="addrNotes" placeholder="e.g. leave at the door, call on arrival"></textarea></div>
+        </div>
+
+        <div class="checkout-card">
+          <h3>💳 Payment method</h3>
+          <label class="pay-option"><input type="radio" name="pay" value="cod" checked> Cash on delivery</label>
+          <label class="pay-option"><input type="radio" name="pay" value="card"> Credit / Debit card</label>
+          <label class="pay-option"><input type="radio" name="pay" value="upi"> UPI</label>
+          <div id="cardPaymentForm" class="card-payment-form" style="display:none;">
+            <div class="field">
+              <label>Cardholder name</label>
+              <input type="text" id="cardName" placeholder="Name on card">
+            </div>
+            <div class="field">
+              <label>Card number</label>
+              <input type="text" id="cardNumber" inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
+            </div>
+            <div class="field-row">
+              <div class="field">
+                <label>Expiry</label>
+                <input type="text" id="cardExpiry" placeholder="MM/YY">
+              </div>
+              <div class="field">
+                <label>CVV</label>
+                <input type="password" id="cardCvv" maxlength="4" placeholder="123">
+              </div>
+            </div>
+            <button class="full-btn pill-btn chili" id="cardProceedBtn" type="button">Proceed with card</button>
+            <div class="payment-help">We’ll use these details for this demo checkout.</div>
+          </div>
+          <div id="upiQrPanel" class="upi-panel" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="checkout-card">
+          <h3>🎟️ Order summary</h3>
+          <div id="checkoutItems"></div>
+          <div class="row-between" style="margin-top:14px;"><span>Subtotal</span><span id="chkSubtotal">₹0</span></div>
+          <div class="row-between"><span>Delivery fee</span><span id="chkDelivery">₹29</span></div>
+          <div class="row-between"><span>Taxes &amp; charges</span><span id="chkTax">₹0</span></div>
+          <div class="row-between total"><span>Total</span><span id="chkTotal">₹0</span></div>
+          <button class="full-btn pill-btn chili" style="margin-top:16px;" onclick="placeOrder()">Place order</button>
+          <button class="full-btn" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--ink);" data-page="menu">Add more items</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:12px;">
+          <div class="brand-mark">
+            <img src="image/logo.png" alt="TastyHub Logo">
+          </div>
+          <div class="display">TastyHub</div>
+        </div>
+        <p style="color:var(--muted);font-size:13px;max-width:260px;line-height:1.6;">Home-style and street-style food from kitchens near you, delivered while it's still hot.</p>
+        <div class="social-row" style="margin-top:14px;">
+          <a href="#" class="icon-btn social-btn" aria-label="Instagram">📸</a>
+          <a href="#" class="icon-btn social-btn" aria-label="Facebook">f</a>
+          <a href="#" class="icon-btn social-btn" aria-label="YouTube">▶</a>
+          <a href="#" class="icon-btn social-btn" aria-label="Twitter">𝕏</a>
+        </div>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul><li><a href="#">About us</a></li><li><a href="#">Careers</a></li><li><a href="#">Partner with us</a></li><li><a href="#">Press</a></li></ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul><li><a href="#">Help center</a></li><li><a href="#">Track order</a></li><li><a href="#">Refund policy</a></li><li><a href="#">Contact us</a></li></ul>
+      </div>
+      <div>
+        <h4>Stay in the loop</h4>
+        <p style="color:var(--muted);font-size:13px;">Get new-kitchen alerts and weekly deals.</p>
+        <div class="newsletter">
+          <input type="email" placeholder="you@email.com">
+          <button class="pill-btn chili">Join</button>
+        </div>
+        <p style="color:var(--muted);font-size:12px;margin-top:14px;">📞 1800-123-4567 &nbsp;·&nbsp; ✉️ hello@tastyhub.food</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 TastyHub. All rights reserved.</span>
+      <span>Made for people who eat on a schedule that isn't a schedule.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ================= CART DRAWER ================= -->
+<div class="overlay" id="overlay"></div>
+<div class="drawer" id="cartDrawer">
+  <div class="drawer-head">
+    <h3>🎟️ Your order</h3>
+    <button class="icon-btn" id="closeCart">✕</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="drawer-foot" id="cartFoot">
+    <div class="row-between"><span>Subtotal</span><span id="drawerSubtotal">₹0</span></div>
+    <div class="row-between"><span>Delivery fee</span><span id="drawerDelivery">₹0</span></div>
+    <div class="row-between total"><span>Total</span><span id="drawerTotal">₹0</span></div>
+    <button class="full-btn pill-btn chili" style="margin-top:14px;" id="checkoutBtn">Proceed to checkout</button>
+    <button class="full-btn" style="margin-top:8px;background:transparent;border:1px solid var(--border);color:var(--ink);" id="ordersBtn">View order history</button>
+  </div>
+</div>
+
+<!-- ================= ORDER HISTORY PANEL ================= -->
+<div class="modal" id="ordersModal">
+  <div class="modal-card" style="max-width:720px;width:100%;max-height:80vh;overflow:auto;">
+    <button class="modal-close" id="closeOrders">✕</button>
+    <h3 style="margin-top:0;">Order history</h3>
+    <div id="ordersList"></div>
+  </div>
+</div>
+
+<!-- ================= AUTH MODAL ================= -->
+<div class="modal" id="authModal">
+  <div class="modal-card">
+    <button class="modal-close" id="closeAuth">✕</button>
+    <div class="tab-row">
+      <button class="tab-btn active" data-tab="login">Log in</button>
+      <button class="tab-btn" data-tab="signup">Sign up</button>
+    </div>
+    <div id="loginForm">
+      <div class="field"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="loginPassword" placeholder="••••••••"></div>
+      <button class="full-btn pill-btn chili" onclick="doLogin()">Log in</button>
+      <p style="text-align:center;font-size:12px;color:var(--muted);margin-top:14px;"><a href="#" onclick="event.preventDefault(); handleForgotPassword();">Forgot password?</a></p>
+    </div>
+    <div id="signupForm" style="display:none;">
+      <div class="field"><label>Full name</label><input type="text" id="signupName" placeholder="Your name"></div>
+      <div class="field"><label>Email</label><input type="email" id="signupEmail" placeholder="you@email.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="signupPassword" placeholder="Create a password"></div>
+      <button class="full-btn pill-btn chili" onclick="doSignup()">Create account</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="js/app.js"></script>
+</body>
+</html>
