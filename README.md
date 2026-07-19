@@ -1,23 +1,22 @@
 # TastyHub — Food Ordering Website
 
-TastyHub is a polished full-stack food ordering prototype with a live-backed menu, a modern storefront UI, and a working checkout/order flow. The app is split into a Node.js/Express backend and a static frontend that communicate over HTTP.
+TastyHub is a polished full-stack food ordering prototype with a live-backed menu, a modern storefront UI, and a working checkout and order flow. The app combines a Node.js/Express backend with a static frontend that communicates over HTTP.
 
-## What’s new in the latest version
+## Highlights
 
-- Live menu data from TheMealDB is synced into the backend on startup and cached locally in backend/data/db.json.
-- The search bar is functional and searches the live catalog directly.
-- The restaurant/menu experience is curated around these cuisines: Indian, Chinese, French, Russian, and American.
-- The menu now includes 50+ dishes with 5+ items per category, and each item uses a real dish image.
-- The homepage hero area rotates through featured food images.
-- The checkout experience includes a visible UPI QR payment panel and a card details form for credit/debit payments.
-- The footer includes clickable social buttons for Instagram, Facebook, YouTube, and Twitter.
+- Live menu data from TheMealDB is synced into the backend on startup and cached locally in [backend/data/db.json](backend/data/db.json).
+- The search experience works directly against the live catalog.
+- The storefront highlights curated cuisines such as Indian, Chinese, French, Russian, and American.
+- The homepage includes a hero section, featured food carousel, categories, restaurants, and checkout steps.
+- The UI now includes branded logo styling in both the navbar and footer.
 - Users can sign up, log in, reset a password, browse favorites, and view order history with tracking and cancellation controls.
 
 ## Project structure
 
 ```text
-tiffin-torch/
-├── backend/          # Express API, authentication, cart, favorites, orders
+TastyHub/
+├── backend/                 # Express API, authentication, cart, favorites, orders
+│   ├── package.json
 │   ├── server.js
 │   ├── src/
 │   │   ├── db.js
@@ -26,9 +25,10 @@ tiffin-torch/
 │   │   ├── fallbackSeed.js
 │   │   └── routes/
 │   └── data/db.json
-└── frontend/         # Static landing page + store UI
+└── frontend/                # Static landing page and storefront UI
     ├── index.html
     ├── css/style.css
+    ├── image/logo.png
     └── js/app.js
 ```
 
@@ -44,7 +44,7 @@ npm start
 
 The backend runs on http://localhost:4000 and exposes the API under /api.
 
-If you want to refresh the catalog from TheMealDB at any time, run:
+To refresh the menu catalog from TheMealDB at any time, run:
 
 ```bash
 curl -X POST http://localhost:4000/api/menu/sync
